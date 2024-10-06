@@ -11,5 +11,6 @@ public record CreateNewTcpResourceRecord(
         String name,
         String ip,
         Integer port,
+        Long intervalInMs,
         Timestamps timestamps
 ) { }

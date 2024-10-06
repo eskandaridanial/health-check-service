@@ -30,4 +30,7 @@ public class TcpResource extends BaseEntity {
 
     @Embedded
     private Port port;
+
+    @Column
+    private Long intervalInMs;
 }

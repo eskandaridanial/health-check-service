@@ -26,13 +26,15 @@ public class CreateNewTcpResourceUseCase implements BaseUseCase<CreateNewTcpReso
         TcpResource tcpResource = tcpResourceRepository.save(new TcpResource(
                 command.name(),
                 new IpAddress(command.ip()),
-                new Port(command.port())
+                new Port(command.port()),
+                command.intervalInMs()
         ));
         return new CreateNewTcpResourceRecord(
                 tcpResource.getId().getId(),
                 tcpResource.getName(),
                 tcpResource.getIp().getIp(),
                 tcpResource.getPort().getPort(),
+                tcpResource.getIntervalInMs(),
                 tcpResource.getTimestamps()
         );
     }
