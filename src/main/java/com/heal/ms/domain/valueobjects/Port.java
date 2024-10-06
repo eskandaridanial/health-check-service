@@ -27,6 +27,6 @@ public class Port {
     }
 
     private boolean isValid(Integer port) {
-        return port < MIN && port > MAX;
+        return port > MIN && port < MAX;
     }
 }
