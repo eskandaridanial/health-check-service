@@ -1,4 +1,4 @@
-package com.heal.ms.common.valueobjects;
+package com.heal.ms.common.domain.valueobjects;
 
 import de.huxhorn.sulky.ulid.ULID;
 import lombok.Getter;

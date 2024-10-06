@@ -2,18 +2,20 @@ package com.heal.ms.domain.valueobjects;
 
 import com.heal.ms.common.exception.ValidationException;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 /**
  * @author: Danial Eskandari
  * @createdAt: 2024-10-06 15:29:18
  */
 @Getter
+@NoArgsConstructor
 public class Port {
 
     private static final Integer MIN = 1;
     private static final Integer MAX = 65535;
 
-    private final Integer port;
+    private Integer port;
 
     public Port(Integer port) {
         if (!isValid(port)) {
@@ -25,6 +27,6 @@ public class Port {
     }
 
     private boolean isValid(Integer port) {
-        return port < MIN || port > MAX;
+        return port < MIN && port > MAX;
     }
 }

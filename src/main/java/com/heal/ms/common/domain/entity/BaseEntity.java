@@ -1,7 +1,7 @@
-package com.heal.ms.common.entity;
+package com.heal.ms.common.domain.entity;
 
-import com.heal.ms.common.valueobjects.Timestamps;
-import com.heal.ms.common.valueobjects.UniqueId;
+import com.heal.ms.common.domain.valueobjects.Timestamps;
+import com.heal.ms.common.domain.valueobjects.UniqueId;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.MappedSuperclass;
