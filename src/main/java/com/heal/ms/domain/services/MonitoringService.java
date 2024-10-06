@@ -7,4 +7,8 @@ package com.heal.ms.domain.services;
 public interface MonitoringService<Resource> {
 
     void add(Resource resource);
+
+    void update(Resource resource);
+
+    void delete(Resource resource);
 }

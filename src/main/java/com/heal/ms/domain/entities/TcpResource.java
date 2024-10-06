@@ -10,11 +10,13 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 /**
  * @author: Danial Eskandari
  * @createdAt: 2024-10-06 13:45:01
  */
+@Setter
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
