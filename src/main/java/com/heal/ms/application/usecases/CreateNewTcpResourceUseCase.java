@@ -4,8 +4,9 @@ import com.heal.ms.application.commands.CreateNewTcpResourceCommand;
 import com.heal.ms.application.records.CreateNewTcpResourceRecord;
 import com.heal.ms.application.services.TcpMonitoringService;
 import com.heal.ms.common.application.usecase.BaseUseCase;
+import com.heal.ms.common.domain.valueobjects.UniqueId;
 import com.heal.ms.domain.entities.TcpResource;
-import com.heal.ms.domain.repositories.TcpResourceRepository;
+import com.heal.ms.domain.repositories.ResourceRepository;
 import com.heal.ms.domain.valueobjects.IpAddress;
 import com.heal.ms.domain.valueobjects.Port;
 import org.springframework.stereotype.Component;
@@ -18,9 +19,9 @@ import org.springframework.stereotype.Component;
 public class CreateNewTcpResourceUseCase implements BaseUseCase<CreateNewTcpResourceCommand, CreateNewTcpResourceRecord> {
 
     private final TcpMonitoringService tcpMonitoringService;
-    private final TcpResourceRepository tcpResourceRepository;
+    private final ResourceRepository<TcpResource, UniqueId> tcpResourceRepository;
 
-    public CreateNewTcpResourceUseCase(TcpMonitoringService tcpMonitoringService, TcpResourceRepository tcpResourceRepository) {
+    public CreateNewTcpResourceUseCase(TcpMonitoringService tcpMonitoringService, ResourceRepository<TcpResource, UniqueId> tcpResourceRepository) {
         this.tcpMonitoringService = tcpMonitoringService;
         this.tcpResourceRepository = tcpResourceRepository;
     }

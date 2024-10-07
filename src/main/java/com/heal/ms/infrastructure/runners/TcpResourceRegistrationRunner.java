@@ -1,7 +1,9 @@
 package com.heal.ms.infrastructure.runners;
 
 import com.heal.ms.application.services.TcpMonitoringService;
-import com.heal.ms.domain.repositories.TcpResourceRepository;
+import com.heal.ms.common.domain.valueobjects.UniqueId;
+import com.heal.ms.domain.entities.TcpResource;
+import com.heal.ms.domain.repositories.ResourceRepository;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
@@ -14,9 +16,9 @@ import org.springframework.stereotype.Component;
 public class TcpResourceRegistrationRunner implements ApplicationRunner {
 
     private final TcpMonitoringService tcpMonitoringService;
-    private final TcpResourceRepository tcpResourceRepository;
+    private final ResourceRepository<TcpResource, UniqueId> tcpResourceRepository;
 
-    public TcpResourceRegistrationRunner(TcpMonitoringService tcpMonitoringService, TcpResourceRepository tcpResourceRepository) {
+    public TcpResourceRegistrationRunner(TcpMonitoringService tcpMonitoringService, ResourceRepository<TcpResource, UniqueId> tcpResourceRepository) {
         this.tcpMonitoringService = tcpMonitoringService;
         this.tcpResourceRepository = tcpResourceRepository;
     }

@@ -7,7 +7,7 @@ import com.heal.ms.common.application.usecase.BaseUseCase;
 import com.heal.ms.common.domain.valueobjects.UniqueId;
 import com.heal.ms.common.exception.ResourceNotFoundException;
 import com.heal.ms.domain.entities.TcpResource;
-import com.heal.ms.domain.repositories.TcpResourceRepository;
+import com.heal.ms.domain.repositories.ResourceRepository;
 import org.springframework.stereotype.Component;
 
 /**
@@ -18,9 +18,9 @@ import org.springframework.stereotype.Component;
 public class DeleteTcpResourceUseCase implements BaseUseCase<DeleteTcpResourceCommand, DeleteTcpResourceRecord> {
 
     private final TcpMonitoringService tcpMonitoringService;
-    private final TcpResourceRepository tcpResourceRepository;
+    private final ResourceRepository<TcpResource, UniqueId> tcpResourceRepository;
 
-    public DeleteTcpResourceUseCase(TcpMonitoringService tcpMonitoringService, TcpResourceRepository tcpResourceRepository) {
+    public DeleteTcpResourceUseCase(TcpMonitoringService tcpMonitoringService, ResourceRepository<TcpResource, UniqueId> tcpResourceRepository) {
         this.tcpMonitoringService = tcpMonitoringService;
         this.tcpResourceRepository = tcpResourceRepository;
     }

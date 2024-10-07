@@ -7,7 +7,7 @@ import com.heal.ms.common.application.usecase.BaseUseCase;
 import com.heal.ms.common.domain.valueobjects.UniqueId;
 import com.heal.ms.common.exception.ResourceNotFoundException;
 import com.heal.ms.domain.entities.TcpResource;
-import com.heal.ms.domain.repositories.TcpResourceRepository;
+import com.heal.ms.domain.repositories.ResourceRepository;
 import com.heal.ms.domain.valueobjects.IpAddress;
 import com.heal.ms.domain.valueobjects.Port;
 import org.springframework.stereotype.Component;
@@ -20,9 +20,9 @@ import org.springframework.stereotype.Component;
 public class UpdateTcpResourceUseCase implements BaseUseCase<UpdateTcpResourceCommand, UpdateTcpResourceRecord> {
 
     private final TcpMonitoringService tcpMonitoringService;
-    private final TcpResourceRepository tcpResourceRepository;
+    private final ResourceRepository<TcpResource, UniqueId> tcpResourceRepository;
 
-    public UpdateTcpResourceUseCase(TcpMonitoringService tcpMonitoringService, TcpResourceRepository tcpResourceRepository) {
+    public UpdateTcpResourceUseCase(TcpMonitoringService tcpMonitoringService, ResourceRepository<TcpResource, UniqueId> tcpResourceRepository) {
         this.tcpMonitoringService = tcpMonitoringService;
         this.tcpResourceRepository = tcpResourceRepository;
     }
