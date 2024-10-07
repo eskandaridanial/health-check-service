@@ -20,17 +20,17 @@ import org.springframework.stereotype.Component;
 public class UpdateTcpResourceUseCase implements BaseUseCase<UpdateTcpResourceCommand, UpdateTcpResourceRecord> {
 
     private final TcpMonitoringService tcpMonitoringService;
-    private final ResourceRepository<TcpResource, UniqueId> tcpResourceRepository;
+    private final ResourceRepository<TcpResource, UniqueId> resourceRepository;
 
-    public UpdateTcpResourceUseCase(TcpMonitoringService tcpMonitoringService, ResourceRepository<TcpResource, UniqueId> tcpResourceRepository) {
+    public UpdateTcpResourceUseCase(TcpMonitoringService tcpMonitoringService, ResourceRepository<TcpResource, UniqueId> resourceRepository) {
         this.tcpMonitoringService = tcpMonitoringService;
-        this.tcpResourceRepository = tcpResourceRepository;
+        this.resourceRepository = resourceRepository;
     }
 
     public UpdateTcpResourceRecord execute(UpdateTcpResourceCommand command) {
         TcpResource tcpResource = null;
         try {
-            tcpResource = tcpResourceRepository.findById(new UniqueId(command.resourceId())).orElseThrow(
+            tcpResource = resourceRepository.findById(new UniqueId(command.resourceId())).orElseThrow(
                     () -> new ResourceNotFoundException("Resource with id " + command.resourceId() + " not found."));
 
             tcpResource.setName(command.name());
@@ -39,7 +39,7 @@ public class UpdateTcpResourceUseCase implements BaseUseCase<UpdateTcpResourceCo
             tcpResource.setIntervalInMs(command.intervalInMs());
             tcpResource.setTimeout(command.timeout());
 
-            tcpResource = tcpResourceRepository.save(tcpResource);
+            tcpResource = resourceRepository.save(tcpResource);
 
             return new UpdateTcpResourceRecord(
                     tcpResource.getId().getId(),

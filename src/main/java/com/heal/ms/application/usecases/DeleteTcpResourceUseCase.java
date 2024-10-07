@@ -18,19 +18,19 @@ import org.springframework.stereotype.Component;
 public class DeleteTcpResourceUseCase implements BaseUseCase<DeleteTcpResourceCommand, DeleteTcpResourceRecord> {
 
     private final TcpMonitoringService tcpMonitoringService;
-    private final ResourceRepository<TcpResource, UniqueId> tcpResourceRepository;
+    private final ResourceRepository<TcpResource, UniqueId> resourceRepository;
 
-    public DeleteTcpResourceUseCase(TcpMonitoringService tcpMonitoringService, ResourceRepository<TcpResource, UniqueId> tcpResourceRepository) {
+    public DeleteTcpResourceUseCase(TcpMonitoringService tcpMonitoringService, ResourceRepository<TcpResource, UniqueId> resourceRepository) {
         this.tcpMonitoringService = tcpMonitoringService;
-        this.tcpResourceRepository = tcpResourceRepository;
+        this.resourceRepository = resourceRepository;
     }
 
     public DeleteTcpResourceRecord execute(DeleteTcpResourceCommand command) {
         TcpResource tcpResource = null;
         try {
-            tcpResource = tcpResourceRepository.findById(new UniqueId(command.resourceId())).orElseThrow(
+            tcpResource = resourceRepository.findById(new UniqueId(command.resourceId())).orElseThrow(
                     () -> new ResourceNotFoundException("Resource with id " + command.resourceId() + " not found."));
-            tcpResourceRepository.deleteById(new UniqueId(command.resourceId()));
+            resourceRepository.deleteById(new UniqueId(command.resourceId()));
             return new DeleteTcpResourceRecord(true);
         } finally {
             if (tcpResource != null)

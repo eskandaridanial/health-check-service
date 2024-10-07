@@ -1,4 +1,4 @@
-package com.heal.ms.domain;
+package com.heal.ms.domain.enums;
 
 /**
  * @author: Danial Eskandari

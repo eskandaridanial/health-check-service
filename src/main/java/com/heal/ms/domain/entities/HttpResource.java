@@ -1,7 +1,7 @@
 package com.heal.ms.domain.entities;
 
 import com.heal.ms.common.domain.entity.BaseEntity;
-import com.heal.ms.domain.HttpMethods;
+import com.heal.ms.domain.enums.HttpMethods;
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

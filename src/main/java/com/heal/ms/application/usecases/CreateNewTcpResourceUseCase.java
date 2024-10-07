@@ -19,18 +19,18 @@ import org.springframework.stereotype.Component;
 public class CreateNewTcpResourceUseCase implements BaseUseCase<CreateNewTcpResourceCommand, CreateNewTcpResourceRecord> {
 
     private final TcpMonitoringService tcpMonitoringService;
-    private final ResourceRepository<TcpResource, UniqueId> tcpResourceRepository;
+    private final ResourceRepository<TcpResource, UniqueId> resourceRepository;
 
-    public CreateNewTcpResourceUseCase(TcpMonitoringService tcpMonitoringService, ResourceRepository<TcpResource, UniqueId> tcpResourceRepository) {
+    public CreateNewTcpResourceUseCase(TcpMonitoringService tcpMonitoringService, ResourceRepository<TcpResource, UniqueId> resourceRepository) {
         this.tcpMonitoringService = tcpMonitoringService;
-        this.tcpResourceRepository = tcpResourceRepository;
+        this.resourceRepository = resourceRepository;
     }
 
     public CreateNewTcpResourceRecord execute(CreateNewTcpResourceCommand command) {
         TcpResource tcpResource = null;
         try {
             // todo: handle rollback in case of persistence stage
-            tcpResource = tcpResourceRepository.save(new TcpResource(
+            tcpResource = resourceRepository.save(new TcpResource(
                     command.name(),
                     command.intervalInMs(),
                     new IpAddress(command.ip()),

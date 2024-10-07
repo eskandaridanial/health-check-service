@@ -6,9 +6,10 @@ import java.util.Map;
 
 /**
  * @author: Danial Eskandari
- * @createdAt: 2024-10-07 15:28:00
+ * @createdAt: 2024-10-07 16:25:02
  */
-public record CreateNewHttpResourceCommand(
+public record UpdateHttpResourceCommand(
+        String resourceId,
         String name,
         Long intervalInMs,
         String url,
