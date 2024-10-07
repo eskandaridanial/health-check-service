@@ -36,19 +36,23 @@ public class UpdateTcpResourceUseCase implements BaseUseCase<UpdateTcpResourceCo
             tcpResource.setName(command.name());
             tcpResource.setIp(new IpAddress(command.ip()));
             tcpResource.setPort(new Port(command.port()));
+            tcpResource.setIntervalInMs(command.intervalInMs());
+            tcpResource.setTimeout(command.timeout());
 
             tcpResource = tcpResourceRepository.save(tcpResource);
 
             return new UpdateTcpResourceRecord(
                     tcpResource.getId().getId(),
                     tcpResource.getName(),
+                    tcpResource.getIntervalInMs(),
                     tcpResource.getIp().getIp(),
                     tcpResource.getPort().getPort(),
-                    tcpResource.getIntervalInMs(),
+                    tcpResource.getTimeout(),
                     tcpResource.getTimestamps()
             );
         } finally {
-            tcpMonitoringService.update(tcpResource);
+            if (tcpResource != null)
+                tcpMonitoringService.update(tcpResource);
         }
     }
 }

@@ -27,6 +27,9 @@ public class TcpResource extends BaseEntity {
     @Column(unique = true)
     private String name;
 
+    @Column
+    private Long intervalInMs;
+
     @Embedded
     private IpAddress ip;
 
@@ -34,5 +37,5 @@ public class TcpResource extends BaseEntity {
     private Port port;
 
     @Column
-    private Long intervalInMs;
+    private Integer timeout;
 }

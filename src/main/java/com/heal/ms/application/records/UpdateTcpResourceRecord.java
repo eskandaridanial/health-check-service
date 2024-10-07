@@ -9,8 +9,9 @@ import com.heal.ms.common.domain.valueobjects.Timestamps;
 public record UpdateTcpResourceRecord(
         String resourceId,
         String name,
+        Long intervalInMs,
         String ip,
         Integer port,
-        Long intervalInMs,
+        Integer timeout,
         Timestamps timestamps
 ) { }

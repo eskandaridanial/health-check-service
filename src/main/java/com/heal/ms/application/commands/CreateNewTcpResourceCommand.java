@@ -6,7 +6,8 @@ package com.heal.ms.application.commands;
  */
 public record CreateNewTcpResourceCommand(
         String name,
+        Long intervalInMs,
         String ip,
         Integer port,
-        Long intervalInMs
+        Integer timeout
 ) {}

@@ -31,17 +31,19 @@ public class CreateNewTcpResourceUseCase implements BaseUseCase<CreateNewTcpReso
             // todo: handle rollback in case of persistence stage
             tcpResource = tcpResourceRepository.save(new TcpResource(
                     command.name(),
+                    command.intervalInMs(),
                     new IpAddress(command.ip()),
                     new Port(command.port()),
-                    command.intervalInMs()
+                    command.timeout()
             ));
 
             return new CreateNewTcpResourceRecord(
                     tcpResource.getId().getId(),
                     tcpResource.getName(),
+                    tcpResource.getIntervalInMs(),
                     tcpResource.getIp().getIp(),
                     tcpResource.getPort().getPort(),
-                    tcpResource.getIntervalInMs(),
+                    tcpResource.getTimeout(),
                     tcpResource.getTimestamps()
             );
         } finally {

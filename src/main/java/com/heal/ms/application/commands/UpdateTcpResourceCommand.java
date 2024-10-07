@@ -7,7 +7,8 @@ package com.heal.ms.application.commands;
 public record UpdateTcpResourceCommand(
         String resourceId,
         String name,
+        Long intervalInMs,
         String ip,
         Integer port,
-        Long intervalInMs
+        Integer timeout
 ) {}

@@ -36,7 +36,7 @@ public class TcpResourceController {
     }
 
     @PutMapping
-    public ResponseEntity<UpdateTcpResourceRecord> deleteTcpResource(@RequestBody UpdateTcpResourceCommand command) {
+    public ResponseEntity<UpdateTcpResourceRecord> updateTcpResource(@RequestBody UpdateTcpResourceCommand command) {
         return ResponseEntity.ok(updateTcpResourceUseCase.execute(command));
     }
 
