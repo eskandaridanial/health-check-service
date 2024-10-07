@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.heal</groupId>
 	<artifactId>health-check-service</artifactId>
-	<version>1.0.0</version>
+	<version>1.1.0</version>
 	<name>health-check-service</name>
 
 	<parent>
@@ -45,6 +45,12 @@
 			<groupId>de.huxhorn.sulky</groupId>
 			<artifactId>de.huxhorn.sulky.ulid</artifactId>
 			<version>8.3.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.vladmihalcea</groupId>
+			<artifactId>hibernate-types-60</artifactId>
+			<version>2.21.1</version>
 		</dependency>
 
 		<dependency>
