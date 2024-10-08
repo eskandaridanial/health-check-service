@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.heal</groupId>
 	<artifactId>health-check-service</artifactId>
-	<version>1.3.0</version>
+	<version>1.4.0</version>
 	<name>health-check-service</name>
 
 	<parent>

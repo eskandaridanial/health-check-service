@@ -4,7 +4,6 @@ import com.heal.ms.domain.aggregates.TcpReportAggregate;
 import com.heal.ms.domain.entities.TcpResource;
 import com.heal.ms.domain.services.ReportProducerService;
 import com.heal.ms.domain.services.ResourceCallService;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -16,7 +15,6 @@ import java.util.concurrent.CompletableFuture;
  * @author: Danial Eskandari
  * @createdAt: 2024-10-06 19:22:04
  */
-@Slf4j
 @Component
 public class TcpResourceCallService implements ResourceCallService<TcpResource> {
 
@@ -41,14 +39,9 @@ public class TcpResourceCallService implements ResourceCallService<TcpResource> 
 
                 CompletableFuture.runAsync(() -> reportProducerService.produce(
                         new TcpReportAggregate(
-                                tcpResource.getId().getId(),
+                                tcpResource,
                                 finalIsHealthy,
                                 responseTime)));
-
-                log.info("TCP health check for {}:{} - Healthy: {}, Response time: {} ms",
-                        tcpResource.getIp().getIp(),
-                        tcpResource.getPort().getPort(),
-                        isHealthy, responseTime);
             }
         } catch (IOException ex) {
             // todo: based on the business needs we can persist failures on a fallback storage

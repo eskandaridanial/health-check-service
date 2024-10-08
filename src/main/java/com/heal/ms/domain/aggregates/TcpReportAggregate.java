@@ -1,7 +1,10 @@
 package com.heal.ms.domain.aggregates;
 
 import com.heal.ms.common.domain.entity.BaseEntity;
+import com.heal.ms.domain.entities.TcpResource;
 import lombok.*;
+
+import java.io.Serializable;
 
 /**
  * @author: Danial Eskandari
@@ -11,9 +14,9 @@ import lombok.*;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class TcpReportAggregate extends BaseEntity {
+public class TcpReportAggregate extends BaseEntity implements Serializable {
 
-    private String resourceId;
+    private TcpResource resource;
 
     private Boolean isHealthy;
 
