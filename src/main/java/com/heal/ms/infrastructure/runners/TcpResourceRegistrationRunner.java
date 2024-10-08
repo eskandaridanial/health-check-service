@@ -16,15 +16,15 @@ import org.springframework.stereotype.Component;
 public class TcpResourceRegistrationRunner implements ApplicationRunner {
 
     private final TcpMonitoringService tcpMonitoringService;
-    private final ResourceRepository<TcpResource, UniqueId> tcpResourceRepository;
+    private final ResourceRepository<TcpResource, UniqueId> resourceRepository;
 
-    public TcpResourceRegistrationRunner(TcpMonitoringService tcpMonitoringService, ResourceRepository<TcpResource, UniqueId> tcpResourceRepository) {
+    public TcpResourceRegistrationRunner(TcpMonitoringService tcpMonitoringService, ResourceRepository<TcpResource, UniqueId> resourceRepository) {
         this.tcpMonitoringService = tcpMonitoringService;
-        this.tcpResourceRepository = tcpResourceRepository;
+        this.resourceRepository = resourceRepository;
     }
 
     @Override
     public void run(ApplicationArguments args) {
-        tcpResourceRepository.findAll().forEach(tcpMonitoringService::add);
+        resourceRepository.findAll().forEach(tcpMonitoringService::add);
     }
 }

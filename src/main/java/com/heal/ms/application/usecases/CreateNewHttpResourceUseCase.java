@@ -6,6 +6,7 @@ import com.heal.ms.common.application.usecase.BaseUseCase;
 import com.heal.ms.common.domain.valueobjects.UniqueId;
 import com.heal.ms.domain.entities.HttpResource;
 import com.heal.ms.domain.repositories.ResourceRepository;
+import com.heal.ms.domain.services.MonitoringService;
 import org.springframework.stereotype.Component;
 
 /**
@@ -15,9 +16,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class CreateNewHttpResourceUseCase implements BaseUseCase<CreateNewHttpResourceCommand, CreateNewHttpResourceRecord> {
 
+    private final MonitoringService<HttpResource> monitoringService;
     private final ResourceRepository<HttpResource, UniqueId> resourceRepository;
 
-    public CreateNewHttpResourceUseCase(ResourceRepository<HttpResource, UniqueId> resourceRepository) {
+    public CreateNewHttpResourceUseCase(MonitoringService<HttpResource> monitoringService, ResourceRepository<HttpResource, UniqueId> resourceRepository) {
+        this.monitoringService = monitoringService;
         this.resourceRepository = resourceRepository;
     }
 
@@ -46,7 +49,7 @@ public class CreateNewHttpResourceUseCase implements BaseUseCase<CreateNewHttpRe
                     httpResource.getTimestamps()
             );
         } finally {
-//            httpMonitoringService.add(httpResource);
+            monitoringService.add(httpResource);
         }
     }
 }

@@ -2,11 +2,11 @@ package com.heal.ms.application.usecases;
 
 import com.heal.ms.application.commands.CreateNewTcpResourceCommand;
 import com.heal.ms.application.records.CreateNewTcpResourceRecord;
-import com.heal.ms.application.services.TcpMonitoringService;
 import com.heal.ms.common.application.usecase.BaseUseCase;
 import com.heal.ms.common.domain.valueobjects.UniqueId;
 import com.heal.ms.domain.entities.TcpResource;
 import com.heal.ms.domain.repositories.ResourceRepository;
+import com.heal.ms.domain.services.MonitoringService;
 import com.heal.ms.domain.valueobjects.IpAddress;
 import com.heal.ms.domain.valueobjects.Port;
 import org.springframework.stereotype.Component;
@@ -18,11 +18,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class CreateNewTcpResourceUseCase implements BaseUseCase<CreateNewTcpResourceCommand, CreateNewTcpResourceRecord> {
 
-    private final TcpMonitoringService tcpMonitoringService;
+    private final MonitoringService<TcpResource> monitoringService;
     private final ResourceRepository<TcpResource, UniqueId> resourceRepository;
 
-    public CreateNewTcpResourceUseCase(TcpMonitoringService tcpMonitoringService, ResourceRepository<TcpResource, UniqueId> resourceRepository) {
-        this.tcpMonitoringService = tcpMonitoringService;
+    public CreateNewTcpResourceUseCase(MonitoringService<TcpResource> monitoringService, ResourceRepository<TcpResource, UniqueId> resourceRepository) {
+        this.monitoringService = monitoringService;
         this.resourceRepository = resourceRepository;
     }
 
@@ -48,7 +48,7 @@ public class CreateNewTcpResourceUseCase implements BaseUseCase<CreateNewTcpReso
                     tcpResource.getTimestamps()
             );
         } finally {
-            tcpMonitoringService.add(tcpResource);
+            monitoringService.add(tcpResource);
         }
     }
 }

@@ -7,6 +7,7 @@ import com.heal.ms.common.domain.valueobjects.UniqueId;
 import com.heal.ms.common.exception.ResourceNotFoundException;
 import com.heal.ms.domain.entities.HttpResource;
 import com.heal.ms.domain.repositories.ResourceRepository;
+import com.heal.ms.domain.services.MonitoringService;
 import org.springframework.stereotype.Component;
 
 /**
@@ -16,9 +17,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class DeleteHttpResourceUseCase implements BaseUseCase<DeleteHttpResourceCommand, DeleteHttpResourceRecord> {
 
+    private final MonitoringService<HttpResource> monitoringService;
     private final ResourceRepository<HttpResource, UniqueId> resourceRepository;
 
-    public DeleteHttpResourceUseCase(ResourceRepository<HttpResource, UniqueId> resourceRepository) {
+    public DeleteHttpResourceUseCase(MonitoringService<HttpResource> monitoringService, ResourceRepository<HttpResource, UniqueId> resourceRepository) {
+        this.monitoringService = monitoringService;
         this.resourceRepository = resourceRepository;
     }
 
@@ -30,8 +33,8 @@ public class DeleteHttpResourceUseCase implements BaseUseCase<DeleteHttpResource
             resourceRepository.deleteById(new UniqueId(command.resourceId()));
             return new DeleteHttpResourceRecord(true);
         } finally {
-//            if (tcpResource != null)
-//                tcpMonitoringService.delete(tcpResource);
+            if (httpResource != null)
+                monitoringService.delete(httpResource);
         }
     }
 }
