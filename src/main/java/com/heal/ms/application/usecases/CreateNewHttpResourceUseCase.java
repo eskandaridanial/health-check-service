@@ -26,30 +26,27 @@ public class CreateNewHttpResourceUseCase implements BaseUseCase<CreateNewHttpRe
 
     @Override
     public CreateNewHttpResourceRecord execute(CreateNewHttpResourceCommand command) {
-        HttpResource httpResource = null;
-        try {
-            // todo: handle rollback in case of persistence stage
-            httpResource = resourceRepository.save(new HttpResource(
-                    command.name(),
-                    command.intervalInMs(),
-                    command.url(),
-                    command.httpMethod(),
-                    command.headers(),
-                    command.body()
-            ));
+        // todo: handle rollback in case of persistence stage
+        HttpResource httpResource = resourceRepository.save(new HttpResource(
+                command.name(),
+                command.intervalInMs(),
+                command.url(),
+                command.httpMethod(),
+                command.headers(),
+                command.body()
+        ));
 
-            return new CreateNewHttpResourceRecord(
-                    httpResource.getId().getId(),
-                    httpResource.getName(),
-                    httpResource.getIntervalInMs(),
-                    httpResource.getUrl(),
-                    httpResource.getHttpMethod().name(),
-                    httpResource.getHeaders(),
-                    httpResource.getBody(),
-                    httpResource.getTimestamps()
-            );
-        } finally {
-            monitoringService.add(httpResource);
-        }
+        monitoringService.add(httpResource);
+
+        return new CreateNewHttpResourceRecord(
+                httpResource.getId().getId(),
+                httpResource.getName(),
+                httpResource.getIntervalInMs(),
+                httpResource.getUrl(),
+                httpResource.getHttpMethod().name(),
+                httpResource.getHeaders(),
+                httpResource.getBody(),
+                httpResource.getTimestamps()
+        );
     }
 }

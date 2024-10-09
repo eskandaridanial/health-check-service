@@ -26,15 +26,13 @@ public class DeleteTcpResourceUseCase implements BaseUseCase<DeleteTcpResourceCo
     }
 
     public DeleteTcpResourceRecord execute(DeleteTcpResourceCommand command) {
-        TcpResource tcpResource = null;
-        try {
-            tcpResource = resourceRepository.findById(new UniqueId(command.resourceId())).orElseThrow(
-                    () -> new ResourceNotFoundException("Resource with id " + command.resourceId() + " not found."));
-            resourceRepository.deleteById(new UniqueId(command.resourceId()));
-            return new DeleteTcpResourceRecord(true);
-        } finally {
-            if (tcpResource != null)
-                monitoringService.delete(tcpResource);
-        }
+        TcpResource tcpResource = resourceRepository.findById(new UniqueId(command.resourceId())).orElseThrow(
+                () -> new ResourceNotFoundException("Resource with id " + command.resourceId() + " not found."));
+        resourceRepository.deleteById(new UniqueId(command.resourceId()));
+
+        if (tcpResource != null)
+            monitoringService.delete(tcpResource);
+
+        return new DeleteTcpResourceRecord(true);
     }
 }

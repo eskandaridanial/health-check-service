@@ -30,7 +30,7 @@ public class TcpResourceCallService implements ResourceCallService<TcpResource> 
             long startTime = System.currentTimeMillis();
             boolean isHealthy = false;
             try (Socket socket = new Socket()) {
-                socket.connect(new InetSocketAddress(tcpResource.getIp().getIp(), tcpResource.getPort().getPort()), tcpResource.getTimeout());
+                socket.connect(new InetSocketAddress(tcpResource.getHost().getHost(), tcpResource.getPort().getPort()), tcpResource.getTimeout());
                 isHealthy = socket.isConnected();
             } finally {
                 long endTime = System.currentTimeMillis();

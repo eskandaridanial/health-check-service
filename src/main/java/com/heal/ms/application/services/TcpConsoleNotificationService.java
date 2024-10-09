@@ -17,7 +17,7 @@ public class TcpConsoleNotificationService implements NotificationService<TcpRep
     public void sendNotification(TcpReportAggregate tcpResource) {
         log.info("TCP health check for {} with address {}:{} - Healthy: {}, Response time: {} ms",
                 tcpResource.getResource().getName(),
-                tcpResource.getResource().getIp().getIp(),
+                tcpResource.getResource().getHost().getHost(),
                 tcpResource.getResource().getPort().getPort(),
                 tcpResource.getIsHealthy(),
                 tcpResource.getLatency());

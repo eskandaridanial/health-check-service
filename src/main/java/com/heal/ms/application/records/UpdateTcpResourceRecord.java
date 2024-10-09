@@ -10,7 +10,7 @@ public record UpdateTcpResourceRecord(
         String resourceId,
         String name,
         Long intervalInMs,
-        String ip,
+        String host,
         Integer port,
         Integer timeout,
         Timestamps timestamps

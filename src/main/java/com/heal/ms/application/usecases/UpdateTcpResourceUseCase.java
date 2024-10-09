@@ -8,7 +8,7 @@ import com.heal.ms.common.exception.ResourceNotFoundException;
 import com.heal.ms.domain.entities.TcpResource;
 import com.heal.ms.domain.repositories.ResourceRepository;
 import com.heal.ms.domain.services.MonitoringService;
-import com.heal.ms.domain.valueobjects.IpAddress;
+import com.heal.ms.domain.valueobjects.Host;
 import com.heal.ms.domain.valueobjects.Port;
 import org.springframework.stereotype.Component;
 
@@ -28,31 +28,28 @@ public class UpdateTcpResourceUseCase implements BaseUseCase<UpdateTcpResourceCo
     }
 
     public UpdateTcpResourceRecord execute(UpdateTcpResourceCommand command) {
-        TcpResource tcpResource = null;
-        try {
-            tcpResource = resourceRepository.findById(new UniqueId(command.resourceId())).orElseThrow(
-                    () -> new ResourceNotFoundException("Resource with id " + command.resourceId() + " not found."));
+        TcpResource tcpResource = resourceRepository.findById(new UniqueId(command.resourceId())).orElseThrow(
+                () -> new ResourceNotFoundException("Resource with id " + command.resourceId() + " not found."));
 
-            tcpResource.setName(command.name());
-            tcpResource.setIp(new IpAddress(command.ip()));
-            tcpResource.setPort(new Port(command.port()));
-            tcpResource.setIntervalInMs(command.intervalInMs());
-            tcpResource.setTimeout(command.timeout());
+        tcpResource.setName(command.name());
+        tcpResource.setHost(new Host(command.host()));
+        tcpResource.setPort(new Port(command.port()));
+        tcpResource.setIntervalInMs(command.intervalInMs());
+        tcpResource.setTimeout(command.timeout());
 
-            tcpResource = resourceRepository.save(tcpResource);
+        tcpResource = resourceRepository.save(tcpResource);
 
-            return new UpdateTcpResourceRecord(
-                    tcpResource.getId().getId(),
-                    tcpResource.getName(),
-                    tcpResource.getIntervalInMs(),
-                    tcpResource.getIp().getIp(),
-                    tcpResource.getPort().getPort(),
-                    tcpResource.getTimeout(),
-                    tcpResource.getTimestamps()
-            );
-        } finally {
-            if (tcpResource != null)
-                monitoringService.update(tcpResource);
-        }
+        if (tcpResource != null)
+            monitoringService.update(tcpResource);
+
+        return new UpdateTcpResourceRecord(
+                tcpResource.getId().getId(),
+                tcpResource.getName(),
+                tcpResource.getIntervalInMs(),
+                tcpResource.getHost().getHost(),
+                tcpResource.getPort().getPort(),
+                tcpResource.getTimeout(),
+                tcpResource.getTimestamps()
+        );
     }
 }

@@ -7,7 +7,7 @@ import com.heal.ms.common.domain.valueobjects.UniqueId;
 import com.heal.ms.domain.entities.TcpResource;
 import com.heal.ms.domain.repositories.ResourceRepository;
 import com.heal.ms.domain.services.MonitoringService;
-import com.heal.ms.domain.valueobjects.IpAddress;
+import com.heal.ms.domain.valueobjects.Host;
 import com.heal.ms.domain.valueobjects.Port;
 import org.springframework.stereotype.Component;
 
@@ -27,28 +27,25 @@ public class CreateNewTcpResourceUseCase implements BaseUseCase<CreateNewTcpReso
     }
 
     public CreateNewTcpResourceRecord execute(CreateNewTcpResourceCommand command) {
-        TcpResource tcpResource = null;
-        try {
-            // todo: handle rollback in case of persistence stage
-            tcpResource = resourceRepository.save(new TcpResource(
-                    command.name(),
-                    command.intervalInMs(),
-                    new IpAddress(command.ip()),
-                    new Port(command.port()),
-                    command.timeout()
-            ));
+        // todo: handle rollback in case of persistence stage
+        TcpResource tcpResource = resourceRepository.save(new TcpResource(
+                        command.name(),
+                        command.intervalInMs(),
+                        new Host(command.host()),
+                        new Port(command.port()),
+                        command.timeout()
+                ));
 
-            return new CreateNewTcpResourceRecord(
-                    tcpResource.getId().getId(),
-                    tcpResource.getName(),
-                    tcpResource.getIntervalInMs(),
-                    tcpResource.getIp().getIp(),
-                    tcpResource.getPort().getPort(),
-                    tcpResource.getTimeout(),
-                    tcpResource.getTimestamps()
-            );
-        } finally {
-            monitoringService.add(tcpResource);
-        }
+        monitoringService.add(tcpResource);
+
+        return new CreateNewTcpResourceRecord(
+                tcpResource.getId().getId(),
+                tcpResource.getName(),
+                tcpResource.getIntervalInMs(),
+                tcpResource.getHost().getHost(),
+                tcpResource.getPort().getPort(),
+                tcpResource.getTimeout(),
+                tcpResource.getTimestamps()
+        );
     }
 }

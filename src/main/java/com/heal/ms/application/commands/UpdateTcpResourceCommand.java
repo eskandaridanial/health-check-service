@@ -8,7 +8,7 @@ public record UpdateTcpResourceCommand(
         String resourceId,
         String name,
         Long intervalInMs,
-        String ip,
+        String host,
         Integer port,
         Integer timeout
 ) {}

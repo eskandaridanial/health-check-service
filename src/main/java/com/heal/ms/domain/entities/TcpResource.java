@@ -1,7 +1,7 @@
 package com.heal.ms.domain.entities;
 
 import com.heal.ms.common.domain.entity.BaseEntity;
-import com.heal.ms.domain.valueobjects.IpAddress;
+import com.heal.ms.domain.valueobjects.Host;
 import com.heal.ms.domain.valueobjects.Port;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
@@ -31,7 +31,7 @@ public class TcpResource extends BaseEntity {
     private Long intervalInMs;
 
     @Embedded
-    private IpAddress ip;
+    private Host host;
 
     @Embedded
     private Port port;

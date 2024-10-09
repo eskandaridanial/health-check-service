@@ -27,33 +27,30 @@ public class UpdateHttpResourceUseCase implements BaseUseCase<UpdateHttpResource
 
     @Override
     public UpdateHttpResourceRecord execute(UpdateHttpResourceCommand command) {
-        HttpResource httpResource = null;
-        try {
-            httpResource = resourceRepository.findById(new UniqueId(command.resourceId())).orElseThrow(
-                    () -> new ResourceNotFoundException("Resource with id " + command.resourceId() + " not found."));
+        HttpResource httpResource = resourceRepository.findById(new UniqueId(command.resourceId())).orElseThrow(
+                () -> new ResourceNotFoundException("Resource with id " + command.resourceId() + " not found."));
 
-            httpResource.setName(command.name());
-            httpResource.setIntervalInMs(command.intervalInMs());
-            httpResource.setUrl(command.url());
-            httpResource.setHttpMethod(command.httpMethod());
-            httpResource.setHeaders(command.headers());
-            httpResource.setBody(command.body());
+        httpResource.setName(command.name());
+        httpResource.setIntervalInMs(command.intervalInMs());
+        httpResource.setUrl(command.url());
+        httpResource.setHttpMethod(command.httpMethod());
+        httpResource.setHeaders(command.headers());
+        httpResource.setBody(command.body());
 
-            httpResource = resourceRepository.save(httpResource);
+        httpResource = resourceRepository.save(httpResource);
 
-            return new UpdateHttpResourceRecord(
-                    httpResource.getId().getId(),
-                    httpResource.getName(),
-                    httpResource.getIntervalInMs(),
-                    httpResource.getUrl(),
-                    httpResource.getHttpMethod(),
-                    httpResource.getHeaders(),
-                    httpResource.getBody(),
-                    httpResource.getTimestamps()
-            );
-        } finally {
-            if (httpResource != null)
-                monitoringService.update(httpResource);
-        }
+        if (httpResource != null)
+            monitoringService.update(httpResource);
+
+        return new UpdateHttpResourceRecord(
+                httpResource.getId().getId(),
+                httpResource.getName(),
+                httpResource.getIntervalInMs(),
+                httpResource.getUrl(),
+                httpResource.getHttpMethod(),
+                httpResource.getHeaders(),
+                httpResource.getBody(),
+                httpResource.getTimestamps()
+        );
     }
 }

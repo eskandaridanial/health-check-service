@@ -26,15 +26,13 @@ public class DeleteHttpResourceUseCase implements BaseUseCase<DeleteHttpResource
     }
 
     public DeleteHttpResourceRecord execute(DeleteHttpResourceCommand command) {
-        HttpResource httpResource = null;
-        try {
-            httpResource = resourceRepository.findById(new UniqueId(command.resourceId())).orElseThrow(
-                    () -> new ResourceNotFoundException("Resource with id " + command.resourceId() + " not found."));
-            resourceRepository.deleteById(new UniqueId(command.resourceId()));
-            return new DeleteHttpResourceRecord(true);
-        } finally {
-            if (httpResource != null)
-                monitoringService.delete(httpResource);
-        }
+        HttpResource httpResource = resourceRepository.findById(new UniqueId(command.resourceId())).orElseThrow(
+                () -> new ResourceNotFoundException("Resource with id " + command.resourceId() + " not found."));
+        resourceRepository.deleteById(new UniqueId(command.resourceId()));
+
+        if (httpResource != null)
+            monitoringService.delete(httpResource);
+
+        return new DeleteHttpResourceRecord(true);
     }
 }
