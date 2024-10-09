@@ -13,6 +13,6 @@ public record CreateNewHttpResourceCommand(
         Long intervalInMs,
         String url,
         HttpMethods httpMethod,
-        Map<String, Object> headers,
+        Map<String, String> headers,
         Map<String, Object> body
 ) {}

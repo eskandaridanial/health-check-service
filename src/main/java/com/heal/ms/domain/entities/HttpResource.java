@@ -38,7 +38,7 @@ public class HttpResource extends BaseEntity {
 
     @Type(JsonBinaryType.class)
     @Column(columnDefinition = "jsonb")
-    private Map<String, Object> headers;
+    private Map<String, String> headers;
 
     @Type(JsonBinaryType.class)
     @Column(columnDefinition = "jsonb")

@@ -14,7 +14,7 @@ public record CreateNewHttpResourceRecord(
         Long intervalInMs,
         String url,
         String httpMethod,
-        Map<String, Object> headers,
+        Map<String, String> headers,
         Map<String, Object> body,
         Timestamps timestamps
 ) {}

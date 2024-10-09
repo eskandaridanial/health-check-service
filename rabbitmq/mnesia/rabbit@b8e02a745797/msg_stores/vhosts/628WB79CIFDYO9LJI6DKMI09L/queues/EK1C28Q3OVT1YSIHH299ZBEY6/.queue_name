@@ -1,0 +1,3 @@
+VHOST: /
+QUEUE: http-queue
+INDEX: v2
