@@ -1,13 +1,16 @@
 package com.heal.ms.domain.valueobjects;
 
 import com.heal.ms.common.exception.ValidationException;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 /**
  * @author: Danial Eskandari
  * @createdAt: 2024-10-11 02:55:29
  */
-
+@Getter
+@NoArgsConstructor
 public class Password {
 
     private static final int MIN_LENGTH = 8;
