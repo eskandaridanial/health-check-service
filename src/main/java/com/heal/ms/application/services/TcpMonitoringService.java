@@ -3,7 +3,7 @@ package com.heal.ms.application.services;
 import com.heal.ms.domain.entities.TcpResource;
 import com.heal.ms.domain.services.MonitoringService;
 import com.heal.ms.domain.services.ResourceCallService;
-import com.heal.ms.domain.tasks.TcpMonitoringTask;
+import com.heal.ms.infrastructure.tasks.TcpMonitoringTask;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 

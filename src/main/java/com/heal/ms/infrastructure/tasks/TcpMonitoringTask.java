@@ -1,6 +1,6 @@
-package com.heal.ms.domain.tasks;
+package com.heal.ms.infrastructure.tasks;
 
-import com.heal.ms.domain.entities.HttpResource;
+import com.heal.ms.domain.entities.TcpResource;
 import com.heal.ms.domain.services.ResourceCallService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -12,15 +12,15 @@ import java.util.concurrent.TimeUnit;
  * @createdAt: 2024-10-06 19:20:01
  */
 @Slf4j
-public class HttpMonitoringTask implements Runnable {
+public class TcpMonitoringTask implements Runnable {
 
-    private final ResourceCallService<HttpResource> resourceCallService;
+    private final ResourceCallService<TcpResource> resourceCallService;
     private final ScheduledExecutorService scheduler;
-    private final HttpResource httpResource;
+    private final TcpResource tcpResource;
     private volatile boolean cancelled = false;
 
-    public HttpMonitoringTask(HttpResource httpResource, ScheduledExecutorService scheduler, ResourceCallService<HttpResource> resourceCallService) {
-        this.httpResource = httpResource;
+    public TcpMonitoringTask(TcpResource tcpResource, ScheduledExecutorService scheduler, ResourceCallService<TcpResource> resourceCallService) {
+        this.tcpResource = tcpResource;
         this.scheduler = scheduler;
         this.resourceCallService = resourceCallService;
     }
@@ -34,10 +34,10 @@ public class HttpMonitoringTask implements Runnable {
         if (cancelled) return;
 
         try {
-            resourceCallService.call(httpResource);
+            resourceCallService.call(tcpResource);
         } finally {
             if (!cancelled) {
-                long intervalInMs = httpResource.getIntervalInMs();
+                long intervalInMs = tcpResource.getIntervalInMs();
                 scheduler.schedule(this, intervalInMs, TimeUnit.MILLISECONDS);
             }
         }
