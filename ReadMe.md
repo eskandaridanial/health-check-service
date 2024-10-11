@@ -13,6 +13,8 @@
 6. [Purpose of the project](#purpose-of-the-project)
 7. [How it works internally](#how-it-works-internally)
 8. [Gathering the health check reports for notification](#gathering-the-health-check-reports-for-notification)
+9. [Monitoring on the TCP layer](#monitoring-on-the-tcp-layer)
+10. [Monitoring on the HTTP layer](#monitoring-on-the-http-layer)
 
 ---
 
@@ -153,3 +155,160 @@ There is a default console logger consumer that logs the health check reports to
 This design allows **HCS** to be highly flexible and scalable. You can add more consumers to the queues and notify on more services depending on your needs.
 
 ---
+
+
+## Monitoring on the TCP layer
+
+1. Creating a TCP health check resource
+
+You can create a TCP health check resource by making a POST request to the `/heal/v1/tcp-resource` endpoint.
+
+```bash
+curl --location 'localhost:8000/heal/v1/tcp-resource' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Bearer {ACCESS_TOKEN}' \
+--data '{
+    "name":"postgres",
+    "host":"127.0.0.1",
+    "port":5432,
+    "intervalInMs":10000,
+    "timeout":10000
+}'
+```
+
+Parameters:
+
+- `name`: The name of the resource.
+- `host`: The host of the destination.
+- `port`: The port of the destination.
+- `intervalInMs`: The interval time in milliseconds between each health check.
+- `timeout`: The timeout in milliseconds for the health check.
+
+2. Updating a TCP health check resource
+
+You can update a TCP health check resource by making a PUT request to the `/heal/v1/tcp-resource` endpoint.
+
+```bash
+curl --location --request PUT 'localhost:8000/heal/v1/tcp-resource' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Bearer {ACCESS_TOKEN}' \
+--data '{
+    "resourceId": "{RESOURCE_ID}",
+    "name": "postgres",
+    "intervalInMs": 1000,
+    "host": "127.0.0.1",
+    "port": 5432,
+    "timeout": 1000
+}'
+```
+
+Parameters:
+
+- `resourceId`: The id of the resource to be updated.
+- `name`: The name of the resource.
+- `host`: The host of the destination.
+- `port`: The port of the destination.
+- `intervalInMs`: The interval time in milliseconds between each health check.
+- `timeout`: The timeout in milliseconds for the health check.
+
+3. Deleting a TCP health check resource
+
+You can delete a TCP health check resource by making a DELETE request to the `/heal/v1/tcp-resource` endpoint.
+
+```bash
+curl --location --request DELETE 'localhost:8000/heal/v1/tcp-resource' \
+--header 'Authorization: Bearer {ACCESS_TOKEN}' \
+--data '{
+    "resourceId": "{RESOURCE_ID}"
+}'
+```
+
+Parameters:
+
+- `resourceId`: The id of the resource to be deleted.
+
+---
+
+## Monitoring on the HTTP layer
+
+1. Creating a HTTP health check resource
+
+You can create a HTTP health check resource by making a POST request to the `/heal/v1/http-resource` endpoint.
+
+```bash
+curl --location 'localhost:8000/heal/v1/http-resource' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyb290IiwiaWF0IjoxNzI4NjI4ODE3LCJleHAiOjE3Mjg2MzI0MTd9.uuKXLCMwbnJ4xe2cpYjvqWhs3nK3TjpHpQOdUVnO2lU' \
+--data '{
+    "name":"name-of-the-service",
+    "intervalInMs":1000,
+    "url":"https://example.com/",
+    "httpMethod":"POST",
+    "headers":{
+        "content-type":"application/json"
+    },
+    "body":{
+       "name":"sample" 
+    }
+}'
+```
+
+Parameters:
+
+- `name`: The name of the resource.
+- `url`: The url of the destination.
+- `httpMethod`: The HTTP method to be used.
+- `headers`: The headers of the request.
+- `body`: The body of the request.
+- `intervalInMs`: The interval time in milliseconds between each health check.
+- `timeout`: The timeout in milliseconds for the health check.
+
+2. Updating a HTTP health check resource
+
+You can update a HTTP health check resource by making a PUT request to the `/heal/v1/http-resource` endpoint.
+
+```bash
+curl --location --request PUT 'localhost:8000/heal/v1/http-resource' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Bearer {ACCESS_TOKEN}' \
+--data '{
+    "resourceId": "{RESOURCE_ID}",
+    "name": "sample-service",
+    "intervalInMs": 1000,
+    "url": "https://example.com/",
+    "httpMethod": "POST",
+    "headers": {
+        "content-type":"application/json"
+    },
+    "body":{
+       "name":"sample" 
+    }
+}'
+```
+
+Parameters:
+
+- `resourceId`: The id of the resource to be updated.
+- `name`: The name of the resource.
+- `url`: The url of the destination.
+- `httpMethod`: The HTTP method to be used.
+- `headers`: The headers of the request.
+- `body`: The body of the request.
+- `intervalInMs`: The interval time in milliseconds between each health check.
+- `timeout`: The timeout in milliseconds for the health check.
+
+3. Deleting a HTTP health check resource
+
+You can delete a HTTP health check resource by making a DELETE request to the `/heal/v1/http-resource` endpoint.
+
+```bash
+curl --location --request DELETE 'localhost:8000/heal/v1/http-resource' \
+--header 'Authorization: Bearer {ACCESS_TOKEN}' \
+--data '{
+    "resourceId": "{RESOURCE_ID}"
+}'
+```
+
+Parameters:
+
+- `resourceId`: The id of the resource to be deleted.
