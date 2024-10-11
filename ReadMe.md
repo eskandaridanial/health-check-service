@@ -9,6 +9,7 @@
 2. [Technologies](#technologies)
 3. [Installation](#installation)
 4. [API Documentation](#api-documentation)
+5. [Authentication and access](#authentication-and-access)
 
 ---
 
@@ -82,5 +83,38 @@ Once the application is up and running, you can access the API documentation on:
 ```thymeleafurlexpressions
 http://localhost:8000/swagger-ui/index.html
 ```
+
+---
+
+## Authentication && Access
+
+1. Creating a user
+
+Before using the health check APIs, you need to create a user first by making a POST request to the `/heal/v1/users` endpoint.
+
+```bash
+curl --location 'localhost:8000/heal/v1/users' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "username":"root",
+    "password":"root@root"
+}'
+```
+
+
+2. Getting an access token
+
+Now, you need to get an access token by making a POST request to the `/heal/v1/auth` endpoint with your username and password.
+
+```bash
+curl --location 'localhost:8000/heal/v1/auth' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "username":"root",
+    "password":"root@root"
+}'
+```
+
+**In the response of the `/heal/v1/auth` a token is generated and assigned to your user. You can now experiment the health check APIs by adding this token as a Bearer token inside the header of you requests.**
 
 ---
