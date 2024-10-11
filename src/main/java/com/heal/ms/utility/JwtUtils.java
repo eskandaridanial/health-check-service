@@ -52,7 +52,7 @@ public class JwtUtils {
                 .compact();
     }
 
-    private String extractUsername(String token) {
+    public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
     }
 
