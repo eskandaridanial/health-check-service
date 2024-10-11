@@ -1,0 +1,58 @@
+name: HCS CICD PIPELINE
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up JDK 21
+      uses: actions/setup-java@v3
+      with:
+        java-version: '21'
+        distribution: 'corretto'
+
+    - name: Build with Maven
+      run: mvn clean package
+
+    - name: Run tests
+      run: mvn test
+
+    - name: Build Docker image
+      run: docker build -t health-check-service:latest .
+
+    - name: Save Docker image
+      run: docker save health-check-service:latest > health-check-service.tar.gz
+
+    - name: Upload Docker image as artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: docker-image
+        path: health-check-service.tar.gz
+
+  deploy:
+    needs: build-and-test
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Download Docker image artifact
+      uses: actions/download-artifact@v3
+      with:
+        name: docker-image
+
+    - name: Load Docker image
+      run: docker load < health-check-service.tar.gz
+
+    - name: Deploy to server
+      env:
+        PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
+        HOST: ${{ secrets.SERVER_HOST }}
+        USER: ${{ secrets.SERVER_USER }}
+      run: |
+          docker pull health-check-service:latest
+          docker-compose up -d --force-recreate health-check-service
